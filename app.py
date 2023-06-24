@@ -1,5 +1,6 @@
+import pieces
 import boardLogic
 
 board = boardLogic.Board()
 
-board.printBoard()
+board.print_board()
