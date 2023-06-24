@@ -11,6 +11,7 @@ class Square:
                 self.lower_part =  " . . . "
         else:
             raise ValueError("Color must be 'white' or 'black'")
+        
 
 class Pawn:
     upper_part =  "   _   "
@@ -101,7 +102,7 @@ class Piece:
     color = "white"
     type = Pawn("white")
 
-    def __init__(self, x, y, color, type):
+    def __init__(self, x, y, color, type, position):
         if (x == 'a' or x == 'b' or x == 'c' or x == 'd' or x == 'e' or 
             x == 'f' or x == 'g' or x == 'h'):
             self.x = x
@@ -131,3 +132,5 @@ class Piece:
                     self.type = Square(color)
         else:
             raise ValueError("Type must be 'pawn', 'rook', 'knight', 'bishop', 'queen', 'king'")
+        
+        self.position = position

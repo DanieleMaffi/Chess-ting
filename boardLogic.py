@@ -1,51 +1,51 @@
 import pieces
 
 class Board:
-    black_square = pieces.Piece('a', 1, 'black', 'square')
-    white_square = pieces.Piece('a', 1, 'white', 'square')
+    black_square = pieces.Piece('a', 1, 'black', 'square', 0)
+    white_square = pieces.Piece('a', 1, 'white', 'square', 1)
     pawns = [
-        pieces.Piece('a', 7, 'black', 'pawn'),
-        pieces.Piece('b', 7, 'black', 'pawn'),
-        pieces.Piece('c', 7, 'black', 'pawn'),
-        pieces.Piece('d', 7, 'black', 'pawn'),
-        pieces.Piece('e', 7, 'black', 'pawn'),
-        pieces.Piece('f', 7, 'black', 'pawn'),
-        pieces.Piece('g', 7, 'black', 'pawn'),
-        pieces.Piece('h', 7, 'black', 'pawn'),
-        pieces.Piece('a', 2, 'white', 'pawn'),
-        pieces.Piece('b', 2, 'white', 'pawn'),
-        pieces.Piece('c', 2, 'white', 'pawn'),
-        pieces.Piece('d', 2, 'white', 'pawn'),
-        pieces.Piece('e', 2, 'white', 'pawn'),
-        pieces.Piece('f', 2, 'white', 'pawn'),
-        pieces.Piece('g', 2, 'white', 'pawn'),
-        pieces.Piece('h', 2, 'white', 'pawn'),
+        pieces.Piece('a', 7, 'black', 'pawn', 0),
+        pieces.Piece('b', 7, 'black', 'pawn', 1),
+        pieces.Piece('c', 7, 'black', 'pawn', 2),
+        pieces.Piece('d', 7, 'black', 'pawn', 3),
+        pieces.Piece('e', 7, 'black', 'pawn', 4),
+        pieces.Piece('f', 7, 'black', 'pawn', 5),
+        pieces.Piece('g', 7, 'black', 'pawn', 6),
+        pieces.Piece('h', 7, 'black', 'pawn', 7),
+        pieces.Piece('a', 2, 'white', 'pawn', 8),
+        pieces.Piece('b', 2, 'white', 'pawn', 9),
+        pieces.Piece('c', 2, 'white', 'pawn', 10),
+        pieces.Piece('d', 2, 'white', 'pawn', 11),
+        pieces.Piece('e', 2, 'white', 'pawn', 12),
+        pieces.Piece('f', 2, 'white', 'pawn', 13),
+        pieces.Piece('g', 2, 'white', 'pawn', 14),
+        pieces.Piece('h', 2, 'white', 'pawn', 15),
     ]
     knights = [
-        pieces.Piece('b', 8, 'black', 'knight'),
-        pieces.Piece('g', 8, 'black', 'knight'),
-        pieces.Piece('b', 1, 'white', 'knight'),
-        pieces.Piece('g', 1, 'white', 'knight'),
+        pieces.Piece('b', 8, 'black', 'knight', 0),
+        pieces.Piece('g', 8, 'black', 'knight', 1),
+        pieces.Piece('b', 1, 'white', 'knight', 2),
+        pieces.Piece('g', 1, 'white', 'knight', 3),
     ]
     bishops = [
-        pieces.Piece('c', 8, 'black', 'bishop'),
-        pieces.Piece('f', 8, 'black', 'bishop'),
-        pieces.Piece('c', 1, 'white', 'bishop'),
-        pieces.Piece('f', 1, 'white', 'bishop'),
+        pieces.Piece('c', 8, 'black', 'bishop', 0),
+        pieces.Piece('f', 8, 'black', 'bishop', 1),
+        pieces.Piece('c', 1, 'white', 'bishop', 2),
+        pieces.Piece('f', 1, 'white', 'bishop', 3),
     ]
     rooks = [
-        pieces.Piece('a', 8, 'black', 'rook'),
-        pieces.Piece('h', 8, 'black', 'rook'),
-        pieces.Piece('a', 1, 'white', 'rook'),
-        pieces.Piece('h', 1, 'white', 'rook'),
+        pieces.Piece('a', 8, 'black', 'rook', 0),
+        pieces.Piece('h', 8, 'black', 'rook', 1),
+        pieces.Piece('a', 1, 'white', 'rook', 2),
+        pieces.Piece('h', 1, 'white', 'rook', 3),
     ]
     kings = [
-        pieces.Piece('e', 8, 'black', 'king'),
-        pieces.Piece('e', 1, 'white', 'king'),
+        pieces.Piece('e', 8, 'black', 'king', 0),
+        pieces.Piece('e', 1, 'white', 'king', 1),
     ]
     queens = [
-        pieces.Piece('d', 8, 'black', 'queen'),
-        pieces.Piece('d', 1, 'white', 'queen'),
+        pieces.Piece('d', 8, 'black', 'queen', 0),
+        pieces.Piece('d', 1, 'white', 'queen', 1),
     ]
     lost_pieces = 0,
     board_string = ""
@@ -113,7 +113,7 @@ class Board:
         elif (x % 2 == 1 and y % 2 == 0) or (x % 2 == 0 and y % 2 == 1):
             return 'white'
 
-    def print_board(self):
+    def __str__(self):
         square_height = 3
         board_height = 8
         board_width = 8
@@ -148,56 +148,56 @@ class Board:
                     elif type(self.check_position(k+1, i+1).type) == pieces.Pawn:
                         match j:
                             case 0:
-                                self.board_string += self.pawns[0].type.upper_part
+                                self.board_string += self.pawns[self.check_position(k+1, i+1).position].type.upper_part
                             case 1:
-                                self.board_string += self.pawns[0].type.middle_part
+                                self.board_string += self.pawns[self.check_position(k+1, i+1).position].type.middle_part
                             case 2:
-                                self.board_string += self.pawns[0].type.lower_part
+                                self.board_string += self.pawns[self.check_position(k+1, i+1).position].type.lower_part
 
                     elif type(self.check_position(k+1, i+1).type) == pieces.Knight:
                         match j:
                             case 0:
-                                self.board_string += self.knights[0].type.upper_part
+                                self.board_string += self.knights[self.check_position(k+1, i+1).position].type.upper_part
                             case 1:
-                                self.board_string += self.knights[0].type.middle_part
+                                self.board_string += self.knights[self.check_position(k+1, i+1).position].type.middle_part
                             case 2:
-                                self.board_string += self.knights[0].type.lower_part
+                                self.board_string += self.knights[self.check_position(k+1, i+1).position].type.lower_part
                     
                     elif type(self.check_position(k+1, i+1).type) == pieces.Bishop:
                         match j:
                             case 0:
-                                self.board_string += self.bishops[0].type.upper_part
+                                self.board_string += self.bishops[self.check_position(k+1, i+1).position].type.upper_part
                             case 1:
-                                self.board_string += self.bishops[0].type.middle_part
+                                self.board_string += self.bishops[self.check_position(k+1, i+1).position].type.middle_part
                             case 2:
-                                self.board_string += self.bishops[0].type.lower_part
+                                self.board_string += self.bishops[self.check_position(k+1, i+1).position].type.lower_part
 
                     elif type(self.check_position(k+1, i+1).type) == pieces.Rook:
                         match j:
                             case 0:
-                                self.board_string += self.rooks[0].type.upper_part
+                                self.board_string += self.rooks[self.check_position(k+1, i+1).position].type.upper_part
                             case 1:
-                                self.board_string += self.rooks[0].type.middle_part
+                                self.board_string += self.rooks[self.check_position(k+1, i+1).position].type.middle_part
                             case 2:
-                                self.board_string += self.rooks[0].type.lower_part
+                                self.board_string += self.rooks[self.check_position(k+1, i+1).position].type.lower_part
                     
                     elif type(self.check_position(k+1, i+1).type) == pieces.Queen:
                         match j:
                             case 0:
-                                self.board_string += self.queens[0].type.upper_part
+                                self.board_string += self.queens[self.check_position(k+1, i+1).position].type.upper_part
                             case 1:
-                                self.board_string += self.queens[0].type.middle_part
+                                self.board_string += self.queens[self.check_position(k+1, i+1).position].type.middle_part
                             case 2:
-                                self.board_string += self.queens[0].type.lower_part
+                                self.board_string += self.queens[self.check_position(k+1, i+1).position].type.lower_part
                     
                     elif type(self.check_position(k+1, i+1).type) == pieces.King:
                         match j:
                             case 0:
-                                self.board_string += self.kings[0].type.upper_part
+                                self.board_string += self.kings[self.check_position(k+1, i+1).position].type.upper_part
                             case 1:
-                                self.board_string += self.kings[0].type.middle_part
+                                self.board_string += self.kings[self.check_position(k+1, i+1).position].type.middle_part
                             case 2:
-                                self.board_string += self.kings[0].type.lower_part
+                                self.board_string += self.kings[self.check_position(k+1, i+1).position].type.lower_part
 
                 if j == 1:
                     self.board_string += self.ver_line + str(i+1) + '\n'

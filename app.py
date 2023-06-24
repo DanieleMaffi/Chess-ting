@@ -3,4 +3,6 @@ import boardLogic
 
 board = boardLogic.Board()
 
-board.print_board()
+while(1):
+    print(board)
+    move = input("Select the piece you want to move: ")
