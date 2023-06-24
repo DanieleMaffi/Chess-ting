@@ -17,6 +17,7 @@ class Pawn:
     upper_part =  "   _   "
     middle_part = "  (@)  "
     lower_part =  "  d@b  "
+    first_move = True
 
     def __init__(self, color):
         if color == 'white' or color == 'black':
@@ -97,10 +98,10 @@ class King:
             raise ValueError("Color must be 'white' or 'black'")
 
 class Piece:
-    x = 'A'
-    y = 1
-    color = "white"
-    type = Pawn("white")
+    x = None
+    y = None
+    color = None
+    type = None
 
     def __init__(self, x, y, color, type, position):
         if (x == 'a' or x == 'b' or x == 'c' or x == 'd' or x == 'e' or 
@@ -108,6 +109,10 @@ class Piece:
             self.x = x
         else:
             raise ValueError("Invalid horizontal position")
+        
+        if color == 'white' or color == 'black':
+            self.color = color
+        else: raise ValueError("Invalid color")
         
         if y >= 1 and y <= 8:
             self.y = y

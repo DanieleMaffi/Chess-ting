@@ -1,6 +1,7 @@
 import pieces
 
 class Board:
+    turn = 'white'
     black_square = pieces.Piece('a', 1, 'black', 'square', 0)
     white_square = pieces.Piece('a', 1, 'white', 'square', 1)
     pawns = [
@@ -56,6 +57,12 @@ class Board:
 
     def __init__(self):
         self.board_string =  self.letters + self.hor_lines
+
+    def swap_turns(self):
+        if self.turn == 'white':
+            self.turn = 'black'
+        else:
+            self.turn = 'white'
 
     def convert_letter(self, letter):
         match letter:
@@ -205,7 +212,70 @@ class Board:
                     self.board_string += self.ver_line + ' \n'
         self.board_string += self.hor_lines + self.letters
 
-        print(self.board_string)
+        return self.board_string
+
+    def move_piece(self, x, y, new_x, new_y):
+        x = self.convert_letter(x)
+        new_x = self.convert_letter(new_x)
+
+        if type(self.check_position(x, y))  == str:
+            return "There is no piece at that position\n"
+        
+        if self.turn == 'white' and self.check_position(x, y).color == 'black':
+            return "You cannot move black's pieces\n"
+        
+        if self.turn == 'black' and self.check_position(x, y).color == 'white':
+            return "You cannot move white's pieces\n"
+        
+        if type(self.check_position(x, y).type)  == pieces.Pawn:
+            pawn = self.check_position(x, y)
+            print(x, y)
+            if self.turn == 'white':
+                if new_x == x and new_y > y and new_y <= y+2:
+                    self.swap_turns()
+                    if not pawn.type.first_move and new_y == y+2: 
+                        return "You can't move a pawn two squares two times\n"
+                    if type(self.check_position(new_x, new_y)) == pieces.Piece:
+                        return "There is already a piece at that position\n"
+                    new_x = self.convert_number(new_x)
+                    self.pawns[pawn.position].x = new_x
+                    self.pawns[pawn.position].y = new_y
+                    self.pawns[pawn.position].type.first_move = False
+                    return "You moved a pawn\n"
+                elif (x+1 == new_x or x-1 == new_x) and y+1 == new_y and type(self.check_position(new_x, new_y)) == pieces.Piece:
+                    self.swap_turns()
+                    eaten_piece = self.check_position(new_x, new_y)
+                    new_x = self.convert_number(new_x)
+                    self.pawns[pawn.position].x = new_x
+                    self.pawns[pawn.position].y = new_y
+                    self.pawns[eaten_piece.position].x = 'dead'
+                    self.pawns[eaten_piece.position].y = 0
+                    return "Got it\n"
+            else:
+                if new_x == x and new_y < y and new_y >= y-2:
+                    self.swap_turns()
+                    if not pawn.type.first_move and new_y == y-2: 
+                        return "You can't move a pawn two squares two times\n"
+                    if type(self.check_position(new_x, new_y)) == pieces.Piece:
+                        return "There is already a piece at that position\n"
+                    new_x = self.convert_number(new_x)
+                    self.pawns[pawn.position].x = new_x
+                    self.pawns[pawn.position].y = new_y
+                    self.pawns[pawn.position].type.first_move = False
+                    return "You moved a pawn\n"
+                elif (x+1 == new_x or x-1 == new_x) and y-1 == new_y and type(self.check_position(new_x, new_y)) == pieces.Piece:
+                    self.swap_turns()
+                    eaten_piece = self.check_position(new_x, new_y)
+                    new_x = self.convert_number(new_x)
+                    self.pawns[pawn.position].x = new_x
+                    self.pawns[pawn.position].y = new_y
+                    self.pawns[eaten_piece.position].x = 'dead'
+                    self.pawns[eaten_piece.position].y = 0
+                    return "Got it\n"
+            return "You can't move a pawn there\n"
+        return False
+        
+        
 
 
 
