@@ -26,7 +26,7 @@ while(1):
     result = board.move_piece(x, int(y), new_x, int(new_y))
 
     #clear console
-    os.system('cls' if os.name == 'nt' else 'clear')
+    #os.system('cls' if os.name == 'nt' else 'clear')
 
     print(result)
     print(f"It's {board.turn}'s turn")
