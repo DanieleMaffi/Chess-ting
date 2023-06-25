@@ -214,8 +214,37 @@ class Board:
 
         return self.board_string
     
-    def available_moves(self, x, y):
-        return [[4, 2], [5, 3]]
+    def available_moves(self, piece):
+        avaulable_moves = []
+        x = self.convert_letter(piece.x)
+        y = piece.y
+        if type(piece.type) == pieces.Bishop:
+            for i in range(1, 8):
+                if x+i == 9 or y+i == 9: break
+                if type(self.check_position(x+i, y+i)) == pieces.Piece and self.check_position(x+i, y+i).color == self.turn:
+                    break
+                else:
+                    avaulable_moves.append([x+i, y+i])
+            for i in range(1, 8):
+                if x-i == 0 or y+i == 9: break
+                if type(self.check_position(x-i, y+i)) == pieces.Piece and self.check_position(x-i, y+i).color == self.turn:
+                    break
+                else:
+                    avaulable_moves.append([x-i, y+i])
+            for i in range(1, 8):
+                if x-i == 0 or y-i == 0: break
+                if type(self.check_position(x-i, y-i)) == pieces.Piece and self.check_position(x-i, y-i).color == self.turn:
+                    break
+                else:
+                    avaulable_moves.append([x-i, y-i])
+            for i in range(1, 8):
+                if x+i == 9 or y-i == 0: break
+                if type(self.check_position(x+i, y-i)) == pieces.Piece and self.check_position(x+i, y-i).color == self.turn:
+                    break
+                else:
+                    avaulable_moves.append([x+i, y-i])
+
+        return avaulable_moves
 
     def move_piece(self, x, y, new_x, new_y):
         x = self.convert_letter(x)
@@ -294,7 +323,7 @@ class Board:
         if type(self.check_position(x, y).type)  == pieces.Bishop:
                 bishop = self.check_position(x, y)
                 new_pos = self.check_position(new_x, new_y)
-                available_moves = self.available_moves(x, y)
+                available_moves = self.available_moves(bishop)
                 if ([new_x, new_y] in available_moves):
                     if type(new_pos) == pieces.Piece and new_pos.color == self.turn:
                         return f"There is already a piece at that position\n"
