@@ -657,6 +657,10 @@ class Board:
                     self.pawns[pawn.position].x = new_x
                     self.pawns[pawn.position].y = new_y
                     self.pawns[pawn.position].type.first_move = False
+                    if pawn.y == 8:
+                        pawn.x = 'dead'
+                        new_queen = pieces.Piece(new_x, new_y, 'white', 'queen', len(self.queens))
+                        self.queens.append(new_queen)
                     self.update_territory(self.turn)
                     self.swap_turns()
                     self.is_check()
@@ -683,6 +687,10 @@ class Board:
                     self.pawns[pawn.position].x = new_x
                     self.pawns[pawn.position].y = new_y
                     self.pawns[pawn.position].type.first_move = False
+                    if pawn.y == 1:
+                        pawn.x = 'dead'
+                        new_queen = pieces.Piece(new_x, new_y, 'black', 'queen', len(self.queens))
+                        self.queens.append(new_queen)
                     self.update_territory(self.turn)
                     self.swap_turns()
                     self.is_check()
