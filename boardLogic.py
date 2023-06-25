@@ -403,6 +403,7 @@ class Board:
             for move in to_remove:
                 available.remove(move)
             if available == []:
+                print(self)
                 raise Exception("Check mate!")
             else:
                 return True
@@ -748,6 +749,7 @@ class Board:
                     new_x = self.convert_number(new_x)
                     self.rooks[rook.position].x = new_x
                     self.rooks[rook.position].y = new_y
+                    self.rooks[rook.position].type.first_move = False
                     if type(new_pos) != str:
                         new_pos.x = 'dead'
                         new_pos.y = 0
@@ -786,6 +788,7 @@ class Board:
                     new_x = self.convert_number(new_x)
                     self.kings[king.position].x = new_x
                     self.kings[king.position].y = new_y
+                    self.kings[king.position].type.first_move = False
                     if type(new_pos) != str:
                         new_pos.x = 'dead'
                         new_pos.y = 0
@@ -794,3 +797,52 @@ class Board:
                     self.is_check()
                     return "You moved the king\n"
                 return f"You can't move the king there\n"
+
+    
+    def castle(self, command):
+        if command == 'O-O':
+            if self.turn == 'white':
+                if type(self.check_position(6, 1)) == str and type(self.check_position(7, 1)) == str:
+                    if self.kings[1].type.first_move and self.rooks[3].type.first_move and [6, 1] not in self.black_territory and [7, 1] not in self.black_territory:
+                        self.kings[1].type.first_move = False
+                        self.rooks[3].type.first_move = False
+                        self.kings[1].x = 'g'
+                        self.rooks[3].x = 'f'
+                        self.update_territory(self.turn)
+                        self.swap_turns()
+                        return "You castled\n"
+                return "You can't castle\n"
+            else:
+                if type(self.check_position(6, 8)) == str and type(self.check_position(7, 8)) == str:
+                    if self.kings[0].type.first_move and self.rooks[1].type.first_move and [6, 8] not in self.white_territory and [7, 8] not in self.white_territory:
+                        self.kings[0].type.first_move = False
+                        self.rooks[1].type.first_move = False
+                        self.kings[0].x = 'g'
+                        self.rooks[1].x = 'f'
+                        self.update_territory(self.turn)
+                        self.swap_turns()
+                        return "You castled\n"
+                return "You can't castle\n"
+        if command == 'O-O-O':
+            if self.turn == 'white':
+                if type(self.check_position(2, 1)) == str and type(self.check_position(3, 1)) == str and type(self.check_position(4, 1)) == str:
+                    if self.kings[1].type.first_move and self.rooks[2].type.first_move and [2, 1] not in self.black_territory and [3, 1] not in self.black_territory and [4, 1] not in self.black_territory: 
+                        self.kings[1].type.first_move = False
+                        self.rooks[2].type.first_move = False
+                        self.kings[1].x = 'c'
+                        self.rooks[2].x = 'd'
+                        self.update_territory(self.turn)
+                        self.swap_turns()
+                        return "You castled\n"
+                return "You can't castle\n"
+            else:
+                if type(self.check_position(2, 8)) == str and type(self.check_position(3, 8)) == str and type(self.check_position(4, 8)) == str:
+                    if self.kings[0].type.first_move and self.rooks[0].type.first_move and [2, 8] not in self.white_territory and [2, 8] not in self.white_territory and [3, 8] not in self.white_territory:
+                        self.kings[0].type.first_move = False
+                        self.rooks[0].type.first_move = False
+                        self.kings[0].x = 'c'
+                        self.rooks[0].x = 'c'
+                        self.update_territory(self.turn)
+                        self.swap_turns()
+                        return "You castled\n"
+                return "You can't castle\n"

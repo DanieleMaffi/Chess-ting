@@ -45,6 +45,7 @@ class Rook:
     upper_part =  " @___@ "
     middle_part = "  @@@  "
     lower_part =  " d@@@b "
+    first_move = True
 
     def __init__(self, color):
         if color == 'white' or color == 'black':
@@ -87,6 +88,7 @@ class King:
     upper_part =  " __+__ "
     middle_part = " `@@@' "
     lower_part =  " d@@@b "
+    first_move = True
 
     def __init__(self, color):
         if color == 'white' or color == 'black':
