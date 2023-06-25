@@ -431,6 +431,30 @@ class Board:
                     self.white_territory = old_white
                     self.black_territory = old_black
                     return not check
+                elif (x+1 == new_x or x-1 == new_x) and y+1 == new_y and type(self.check_position(new_x, new_y)) == pieces.Piece:
+                    new_pos = self.check_position(new_x, new_y)
+                    old_black = self.black_territory
+                    old_white = self.white_territory
+                    if type(new_pos) != str:
+                        new_posx = new_pos.x
+                        new_posy = new_pos.y
+                    new_x = self.convert_number(new_x)
+                    self.pawns[pawn.position].x = new_x
+                    self.pawns[pawn.position].y = new_y
+                    if type(new_pos) != str:
+                        new_pos.x = 'dead'
+                        new_pos.y = 0
+                    self.update_territory('black')
+                    self.update_territory('white')
+                    check = self.is_check()
+                    self.pawns[pawn.position].x = self.convert_number(x)
+                    self.pawns[pawn.position].y = y
+                    if type(new_pos) != str:
+                        new_pos.x = new_posx
+                        new_pos.y = new_posy
+                    self.white_territory = old_white
+                    self.black_territory = old_black
+                    return not check
             else:
                 if new_x == x and new_y < y and new_y >= y-2:
                     if not pawn.type.first_move and new_y == y-2: 
@@ -450,11 +474,38 @@ class Board:
                     self.white_territory = old_white
                     self.black_territory = old_black
                     return not check
+                elif (x+1 == new_x or x-1 == new_x) and y-1 == new_y and type(self.check_position(new_x, new_y)) == pieces.Piece:
+                    new_pos = self.check_position(new_x, new_y)
+                    old_black = self.black_territory
+                    old_white = self.white_territory
+                    if type(new_pos) != str:
+                        new_posx = new_pos.x
+                        new_posy = new_pos.y
+                    new_x = self.convert_number(new_x)
+                    self.pawns[pawn.position].x = new_x
+                    self.pawns[pawn.position].y = new_y
+                    if type(new_pos) != str:
+                        new_pos.x = 'dead'
+                        new_pos.y = 0
+                    self.update_territory('black')
+                    self.update_territory('white')
+                    check = self.is_check()
+                    self.pawns[pawn.position].x = self.convert_number(x)
+                    self.pawns[pawn.position].y = y
+                    if type(new_pos) != str:
+                        new_pos.x = new_posx
+                        new_pos.y = new_posy
+                    self.white_territory = old_white
+                    self.black_territory = old_black
+                    return not check
             return False
         
         if type(self.check_position(x, y).type)  == pieces.Knight:
                 knight = self.check_position(x, y)
                 new_pos = self.check_position(new_x, new_y)
+                if type(new_pos) != str:
+                    new_posx = new_pos.x
+                    new_posy = new_pos.y
                 if ((new_x == x+1 or new_x == x-1) and (y+2 == new_y or y-2 == new_y)) or ((x+2 == new_x or x-2 == new_x) and (y+1 == new_y or y-1 == new_y)):
                     if type(new_pos) == pieces.Piece and new_pos.color == self.turn:
                         return False
@@ -463,11 +514,17 @@ class Board:
                     self.knights[knight.position].y = new_y
                     old_black = self.black_territory
                     old_white = self.white_territory
+                    if type(new_pos) != str:
+                        new_pos.x = 'dead'
+                        new_pos.y = 0
                     self.update_territory('black')
                     self.update_territory('white')
                     check = self.is_check()
                     self.knights[knight.position].x = self.convert_number(x)
                     self.knights[knight.position].y = y
+                    if type(new_pos) != str:
+                        new_pos.x = new_posx
+                        new_pos.y = new_posy
                     self.white_territory = old_white
                     self.black_territory = old_black
                     return not check
@@ -476,6 +533,9 @@ class Board:
         if type(self.check_position(x, y).type)  == pieces.Bishop:
                 bishop = self.check_position(x, y)
                 new_pos = self.check_position(new_x, new_y)
+                if type(new_pos) != str:
+                    new_posx = new_pos.x
+                    new_posy = new_pos.y
                 available_moves = self.available_moves(bishop)
                 if ([new_x, new_y] in available_moves):
                     if type(new_pos) == pieces.Piece and new_pos.color == self.turn:
@@ -485,11 +545,17 @@ class Board:
                     self.bishops[bishop.position].y = new_y
                     old_black = self.black_territory
                     old_white = self.white_territory
+                    if type(new_pos) != str:
+                        new_pos.x = 'dead'
+                        new_pos.y = 0
                     self.update_territory('black')
                     self.update_territory('white')
                     check = self.is_check()
                     self.bishops[bishop.position].x = self.convert_number(x)
                     self.bishops[bishop.position].y = y
+                    if type(new_pos) != str:
+                        new_pos.x = new_posx
+                        new_pos.y = new_posy
                     self.white_territory = old_white
                     self.black_territory = old_black
                     return not check
@@ -498,8 +564,10 @@ class Board:
         if type(self.check_position(x, y).type)  == pieces.Rook:
                 rook = self.check_position(x, y)
                 new_pos = self.check_position(new_x, new_y)
+                if type(new_pos) != str:
+                    new_posx = new_pos.x
+                    new_posy = new_pos.y
                 available_moves = self.available_moves(rook)
-                
                 if ([new_x, new_y] in available_moves):
                     if type(new_pos) == pieces.Piece and new_pos.color == self.turn:
                         return False
@@ -508,11 +576,17 @@ class Board:
                     self.rooks[rook.position].y = new_y
                     old_black = self.black_territory
                     old_white = self.white_territory
+                    if type(new_pos) != str:
+                        new_pos.x = 'dead'
+                        new_pos.y = 0
                     self.update_territory('black')
                     self.update_territory('white')
                     check = self.is_check()
                     self.rooks[rook.position].x = self.convert_number(x)
                     self.rooks[rook.position].y = y
+                    if type(new_pos) != str:
+                        new_pos.x = new_posx
+                        new_pos.y = new_posy
                     self.white_territory = old_white
                     self.black_territory = old_black
                     return not check
@@ -521,6 +595,9 @@ class Board:
         if type(self.check_position(x, y).type)  == pieces.Queen:
                 queen = self.check_position(x, y)
                 new_pos = self.check_position(new_x, new_y)
+                if type(new_pos) != str:
+                    new_posx = new_pos.x
+                    new_posy = new_pos.y
                 available_moves = self.available_moves(queen)
                 if ([new_x, new_y] in available_moves):
                     if type(new_pos) == pieces.Piece and new_pos.color == self.turn:
@@ -530,11 +607,17 @@ class Board:
                     self.queens[queen.position].y = new_y
                     old_black = self.black_territory
                     old_white = self.white_territory
+                    if type(new_pos) != str:
+                        new_pos.x = 'dead'
+                        new_pos.y = 0
                     self.update_territory('black')
                     self.update_territory('white')
                     check = self.is_check()
                     self.queens[queen.position].x = self.convert_number(x)
                     self.queens[queen.position].y = y
+                    if type(new_pos) != str:
+                        new_pos.x = new_posx
+                        new_pos.y = new_posy
                     self.white_territory = old_white
                     self.black_territory = old_black
                     return not check
