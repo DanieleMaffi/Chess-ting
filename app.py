@@ -7,15 +7,26 @@ board = boardLogic.Board()
 print(board)
 
 while(1):
+    while(True):
+        try:
+            x, y = input("Select the piece you want to move: ").split()
+        except:
+            print("Invalid piece, try again")
+            continue
+        break
 
-
-    x, y = input("Select the piece you want to move: ").split()
-    new_x, new_y = input("Select the new position: ").split()
+    while(True):
+        try:
+            new_x, new_y = input("Select the new position: ").split()
+        except:
+            print("Invalid position, try again")
+            continue
+        break
 
     result = board.move_piece(x, int(y), new_x, int(new_y))
 
     #clear console
-    os.system('cls' if os.name == 'nt' else 'clear')
+    #os.system('cls' if os.name == 'nt' else 'clear')
 
     print(result)
     print(f"It's {board.turn}'s turn")
