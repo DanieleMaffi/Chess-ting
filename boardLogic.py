@@ -223,104 +223,88 @@ class Board:
         if type(piece.type) == pieces.Bishop:
             for i in range(1, 8):
                 if x+i == 9 or y+i == 9: break
-                if type(self.check_position(x+i, y+i)) == pieces.Piece and self.check_position(x+i, y+i).color == self.turn:
+                available_moves.append([x+i, y+i])
+                if type(self.check_position(x+i, y+i)) == pieces.Piece:
                     break
-                else:
-                    available_moves.append([x+i, y+i])
             for i in range(1, 8):
                 if x-i == 0 or y+i == 9: break
-                if type(self.check_position(x-i, y+i)) == pieces.Piece and self.check_position(x-i, y+i).color == self.turn:
+                available_moves.append([x-i, y+i])
+                if type(self.check_position(x-i, y+i)) == pieces.Piece:
                     break
-                else:
-                    available_moves.append([x-i, y+i])
             for i in range(1, 8):
                 if x-i == 0 or y-i == 0: break
-                if type(self.check_position(x-i, y-i)) == pieces.Piece and self.check_position(x-i, y-i).color == self.turn:
+                available_moves.append([x-i, y-i])
+                if type(self.check_position(x-i, y-i)) == pieces.Piece:
                     break
-                else:
-                    available_moves.append([x-i, y-i])
             for i in range(1, 8):
                 if x+i == 9 or y-i == 0: break
-                if type(self.check_position(x+i, y-i)) == pieces.Piece and self.check_position(x+i, y-i).color == self.turn:
+                available_moves.append([x+i, y-i])
+                if type(self.check_position(x+i, y-i)) == pieces.Piece:
                     break
-                else:
-                    available_moves.append([x+i, y-i])
 
         if type(piece.type) == pieces.Rook:
             for i in range(1, 8):
                 if x+i == 9: break
-                if type(self.check_position(x+i, y)) == pieces.Piece and self.check_position(x+i, y).color == self.turn:
+                available_moves.append([x+i, y])
+                if type(self.check_position(x+i, y)) == pieces.Piece:
                     break
-                else:
-                    available_moves.append([x+i, y])
             for i in range(1, 8):
                 if x-i == 0: break
-                if type(self.check_position(x-i, y)) == pieces.Piece and self.check_position(x-i, y).color == self.turn:
+                available_moves.append([x-i, y])
+                if type(self.check_position(x-i, y)) == pieces.Piece:
                     break
-                else:
-                    available_moves.append([x-i, y])
             for i in range(1, 8):
                 if y-i == 0: break
-                if type(self.check_position(x, y-i)) == pieces.Piece and self.check_position(x, y-i).color == self.turn:
+                available_moves.append([x, y-i])
+                if type(self.check_position(x, y-i)) == pieces.Piece:
                     break
-                else:
-                    available_moves.append([x, y-i])
             for i in range(1, 8):
                 if y+i == 9: break
-                if type(self.check_position(x, y+i)) == pieces.Piece and self.check_position(x, y+i).color == self.turn:
+                available_moves.append([x, y+i])
+                if type(self.check_position(x, y+i)) == pieces.Piece:
                     break
-                else:
-                    available_moves.append([x, y+i])
 
         if type(piece.type) == pieces.Queen:
             for i in range(1, 8):
                 if x+i == 9: break
-                if type(self.check_position(x+i, y)) == pieces.Piece and self.check_position(x+i, y).color == self.turn:
+                available_moves.append([x+i, y])
+                if type(self.check_position(x+i, y)) == pieces.Piece:
                     break
-                else:
-                    available_moves.append([x+i, y])
             for i in range(1, 8):
                 if x-i == 0: break
-                if type(self.check_position(x-i, y)) == pieces.Piece and self.check_position(x-i, y).color == self.turn:
+                available_moves.append([x-i, y])
+                if type(self.check_position(x-i, y)) == pieces.Piece:
                     break
-                else:
-                    available_moves.append([x-i, y])
             for i in range(1, 8):
                 if y-i == 0: break
-                if type(self.check_position(x, y-i)) == pieces.Piece and self.check_position(x, y-i).color == self.turn:
+                available_moves.append([x, y-i])
+                if type(self.check_position(x, y-i)) == pieces.Piece:
                     break
-                else:
-                    available_moves.append([x, y-i])
             for i in range(1, 8):
                 if y+i == 9: break
-                if type(self.check_position(x, y+i)) == pieces.Piece and self.check_position(x, y+i).color == self.turn:
+                available_moves.append([x, y+i])   
+                if type(self.check_position(x, y+i)) == pieces.Piece:
                     break
-                else:
-                    available_moves.append([x, y+i])   
             for i in range(1, 8):
                 if x+i == 9 or y+i == 9: break
-                if type(self.check_position(x+i, y+i)) == pieces.Piece and self.check_position(x+i, y+i).color == self.turn:
+                available_moves.append([x+i, y+i])
+                if type(self.check_position(x+i, y+i)) == pieces.Piece:
                     break
-                else:
-                    available_moves.append([x+i, y+i])
             for i in range(1, 8):
                 if x-i == 0 or y+i == 9: break
-                if type(self.check_position(x-i, y+i)) == pieces.Piece and self.check_position(x-i, y+i).color == self.turn:
+                available_moves.append([x-i, y+i])
+                if type(self.check_position(x-i, y+i)) == pieces.Piece:
                     break
-                else:
-                    available_moves.append([x-i, y+i])
             for i in range(1, 8):
                 if x-i == 0 or y-i == 0: break
-                if type(self.check_position(x-i, y-i)) == pieces.Piece and self.check_position(x-i, y-i).color == self.turn:
+                available_moves.append([x-i, y-i])
+                if type(self.check_position(x-i, y-i)) == pieces.Piece:
                     break
-                else:
-                    available_moves.append([x-i, y-i])
             for i in range(1, 8):
                 if x+i == 9 or y-i == 0: break
-                if type(self.check_position(x+i, y-i)) == pieces.Piece and self.check_position(x+i, y-i).color == self.turn:
+                available_moves.append([x+i, y-i])  
+                if type(self.check_position(x+i, y-i)) == pieces.Piece:
                     break
-                else:
-                    available_moves.append([x+i, y-i])  
 
         if type(piece.type) == pieces.King:
             if self.turn == "white":
@@ -329,17 +313,16 @@ class Board:
                 territory = self.white_territory
             
             moves = [[x, y+1], [x, y-1], [x+1, y], [x-1, y], [x+1, y+1], [x-1, y-1], [x+1, y-1], [x-1, y+1]]
+            to_remove = []
             for move in moves:
-                if move[0] < 1 or move[1] < 1 or move[0] > 8 or move[1] > 8:
-                    moves.remove(move)
-                    continue
-                if type(self.check_position(move[0], move[1])) != str:
-                    if self.check_position(move[0], move[1]).color == self.turn:
-                        moves.remove(move)
-                        continue
                 if move in territory:
-                    moves.remove(move)
-                print(moves)
+                    to_remove.append(move)
+                    continue
+                if move[0] < 1 or move[1] < 1 or move[0] > 8 or move[1] > 8:
+                    to_remove.append(move)
+
+            for move in to_remove:
+                moves.remove(move)
                 
             available_moves = moves
 
@@ -385,11 +368,15 @@ class Board:
             if king.color == color:
                 territory.extend(self.available_moves(king))
 
+        to_remove = []  
         for array in territory:
             if array == []:
-                territory.remove(array)
+                to_remove.append(array)
                 continue
             if array[0] < 1 or array[1] < 1 or array[0] > 8 or array[1] > 8:
+                to_remove.append(array)
+
+        for array in to_remove:
                 territory.remove(array)
 
         if color == 'white':
@@ -408,7 +395,14 @@ class Board:
             territory = self.white_territory
 
         if [self.convert_letter(king.x), king.y] in territory:
-            if self.available_moves(king) == []:
+            available = self.available_moves(king)
+            to_remove = []
+            for move in available:
+                if self.check_position(move[0], move[1]).color == self.turn:
+                    to_remove.append(move)
+            for move in to_remove:
+                available.remove(move)
+            if available == []:
                 raise Exception("Check mate!")
             else:
                 return True
@@ -445,6 +439,7 @@ class Board:
                     self.pawns[pawn.position].type.first_move = False
                     self.update_territory(self.turn)
                     self.swap_turns()
+                    self.is_check()
                     return "You moved a pawn\n"
                 elif (x+1 == new_x or x-1 == new_x) and y+1 == new_y and type(self.check_position(new_x, new_y)) == pieces.Piece:
                     new_pos = self.check_position(new_x, new_y)
@@ -456,6 +451,7 @@ class Board:
                         new_pos.y = 0
                     self.update_territory(self.turn)
                     self.swap_turns()
+                    self.is_check()
                     return "Got it\n"
             else:
                 if new_x == x and new_y < y and new_y >= y-2:
@@ -469,6 +465,7 @@ class Board:
                     self.pawns[pawn.position].type.first_move = False
                     self.update_territory(self.turn)
                     self.swap_turns()
+                    self.is_check()
                     return "You moved a pawn\n"
                 elif (x+1 == new_x or x-1 == new_x) and y-1 == new_y and type(self.check_position(new_x, new_y)) == pieces.Piece:
                     new_pos = self.check_position(new_x, new_y)
@@ -480,6 +477,7 @@ class Board:
                         new_pos.y = 0
                     self.update_territory(self.turn)
                     self.swap_turns()
+                    self.is_check()
                     return "Got it\n"
             return "You can't move a pawn there\n"
         
@@ -497,6 +495,7 @@ class Board:
                         new_pos.y = 0
                     self.update_territory(self.turn)
                     self.swap_turns()
+                    self.is_check()
                     return "You moved a horse\n"
                 return "You can't move a horsy there\n"
         
@@ -515,6 +514,7 @@ class Board:
                         new_pos.y = 0
                     self.update_territory(self.turn)
                     self.swap_turns()
+                    self.is_check()
                     return "You moved a bishop\n"
                 return f"You can't move a bishop there\n"
         
@@ -534,6 +534,7 @@ class Board:
                         new_pos.y = 0
                     self.update_territory(self.turn)
                     self.swap_turns()
+                    self.is_check()
                     return "You moved a rook\n"
                 return f"You can't move a rook there\n"
         
@@ -541,7 +542,6 @@ class Board:
                 queen = self.check_position(x, y)
                 new_pos = self.check_position(new_x, new_y)
                 available_moves = self.available_moves(queen)
-                
                 if ([new_x, new_y] in available_moves):
                     if type(new_pos) == pieces.Piece and new_pos.color == self.turn:
                         return f"There is already a piece at that position\n"
@@ -553,6 +553,7 @@ class Board:
                         new_pos.y = 0
                     self.update_territory(self.turn)
                     self.swap_turns()
+                    self.is_check()
                     return "You moved the queen\n"
                 return f"You can't move the queen there\n"
         
@@ -571,5 +572,6 @@ class Board:
                         new_pos.y = 0
                     self.update_territory(self.turn)
                     self.swap_turns()
+                    self.is_check()
                     return "You moved the king\n"
                 return f"You can't move the king there\n"
