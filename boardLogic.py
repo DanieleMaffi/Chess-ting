@@ -213,6 +213,9 @@ class Board:
         self.board_string += self.hor_lines + self.letters
 
         return self.board_string
+    
+    def available_moves(self, x, y):
+        return [[4, 2], [5, 3]]
 
     def move_piece(self, x, y, new_x, new_y):
         x = self.convert_letter(x)
@@ -229,14 +232,13 @@ class Board:
         
         if type(self.check_position(x, y).type)  == pieces.Pawn:
             pawn = self.check_position(x, y)
-            print(x, y)
             if self.turn == 'white':
                 if new_x == x and new_y > y and new_y <= y+2:
-                    self.swap_turns()
                     if not pawn.type.first_move and new_y == y+2: 
                         return "You can't move a pawn two squares two times\n"
                     if type(self.check_position(new_x, new_y)) == pieces.Piece:
                         return "There is already a piece at that position\n"
+                    self.swap_turns()
                     new_x = self.convert_number(new_x)
                     self.pawns[pawn.position].x = new_x
                     self.pawns[pawn.position].y = new_y
@@ -253,11 +255,11 @@ class Board:
                     return "Got it\n"
             else:
                 if new_x == x and new_y < y and new_y >= y-2:
-                    self.swap_turns()
                     if not pawn.type.first_move and new_y == y-2: 
                         return "You can't move a pawn two squares two times\n"
                     if type(self.check_position(new_x, new_y)) == pieces.Piece:
                         return "There is already a piece at that position\n"
+                    self.swap_turns()
                     new_x = self.convert_number(new_x)
                     self.pawns[pawn.position].x = new_x
                     self.pawns[pawn.position].y = new_y
@@ -273,45 +275,38 @@ class Board:
                     self.pawns[eaten_piece.position].y = 0
                     return "Got it\n"
             return "You can't move a pawn there\n"
-        return False
+        
+        if type(self.check_position(x, y).type)  == pieces.Knight:
+                knight = self.check_position(x, y)
+                new_pos = self.check_position(new_x, new_y)
+                if ((new_x == x+1 or new_x == x-1) and (y+2 == new_y or y-2 == new_y)) or ((x+2 == new_x or x-2 == new_x) and (y+1 == new_y or y-1 == new_y)):
+                    if type(new_pos) == pieces.Piece and new_pos.color == self.turn:
+                        return f"There is already a piece at that position\n"
+                    new_x = self.convert_number(new_x)
+                    self.knights[knight.position].x = new_x
+                    self.knights[knight.position].y = new_y
+                    if type(new_pos) != str:
+                        new_pos.x = 'dead'
+                        new_pos.y = 0
+                    return "You moved a horse\n"
+                return "You can't move a horsy there\n"
+        
+        if type(self.check_position(x, y).type)  == pieces.Bishop:
+                bishop = self.check_position(x, y)
+                new_pos = self.check_position(new_x, new_y)
+                available_moves = self.available_moves(x, y)
+                if ([new_x, new_y] in available_moves):
+                    if type(new_pos) == pieces.Piece and new_pos.color == self.turn:
+                        return f"There is already a piece at that position\n"
+                    self.swap_turns()
+                    new_x = self.convert_number(new_x)
+                    self.bishops[bishop.position].x = new_x
+                    self.bishops[bishop.position].y = new_y
+                    if type(new_pos) != str:
+                        new_pos.x = 'dead'
+                        new_pos.y = 0
+                    return "You moved a bishop\n"
+                return f"You can't move a bishop there\n"
         
         
-
-
-
-
-"""  A       B       C       D       E       F       G       H
-  ------- ------- ------- ------- ------- ------- ------- -------
- | @___@ |  %~b  |  .@.  | \o*o/ | __+__ |  .@.  |  %~b  | @___@ |
-8|  @@@  | `'dX  |  @@@  |  @@@  | `@@@' |  @@@  | `'dX  |  @@@  |8
- | d@@@b |  d@@b | ./A\. | d@@@b | d@@@b | ./A\. |  d@@b | d@@@b |
-  ------- ------- ------- ------- ------- ------- ------- -------
- |   _   |   _   |   _   |   _   |   _   |   _   |   _   |   _   |
-7|  (@)  |  (@)  |  (@)  |  (@)  |  (@)  |  (@)  |  (@)  |  (@)  |7
- |  d@b  |  d@b  |  d@b  |  d@b  |  d@b  |  d@b  |  d@b  |  d@b  |
-  ------- ------- ------- ------- ------- ------- ------- -------
- |       | . . . |       | . . . |       | . . . |       | . . . |
-6|       | . . . |       | . . . |       | . . . |       | . . . |6
- |       | . . . |       | . . . |       | . . . |       | . . . |
-  ------- ------- ------- ------- ------- ------- ------- -------
- | . . . |       | . . . |       | . . . |       | . . . |       |
-5| . . . |       | . . . |       | . . . |       | . . . |       |5
- | . . . |       | . . . |       | . . . |       | . . . |       |
-  ------- ------- ------- ------- ------- ------- ------- -------
- |       | . . . |       | . . . |       | . . . |       | . . . |
-4|       | . . . |       | . . . |       | . . . |       | . . . |4
- |       | . . . |       | . . . |       | . . . |       | . . . |
-  ------- ------- ------- ------- ------- ------- ------- -------
- | . . . |       | . . . |       | . . . |       | . . . |       |
-3| . . . |       | . . . |       | . . . |       | . . . |       |3
- | . . . |       | . . . |       | . . . |       | . . . |       |
-  ------- ------- ------- ------- ------- ------- ------- -------
- |   _   |   _   |   _   |   _   |   _   |   _   |   _   |   _   |
-2|  ( )  |  ( )  |  ( )  |  ( )  |  ( )  |  ( )  |  ( )  |  ( )  |2
- |  /_\  |  /_\  |  /_\  |  /_\  |  /_\  |  /_\  |  /_\  |  /_\  |
-  ------- ------- ------- ------- ------- ------- ------- -------
- | [___] |  %~\  |  .O.  | \o^o/ | __+__ |  .O.  |  %~\  | [___] |
-1|  [ ]  | `')(  |  \ /  |  [ ]  | `. .' |  \ /  | `')(  |  [ ]  |1
- | /___\ |  <__> |  /_\  | /___\ | /___\ |  /_\  |  <__> | /___\ |
-  ------- ------- ------- ------- ------- ------- ------- -------
-     A       B       C       D       E       F       G       H"""
+        
