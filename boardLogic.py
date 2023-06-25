@@ -275,12 +275,13 @@ class Board:
                     return "You moved a pawn\n"
                 elif (x+1 == new_x or x-1 == new_x) and y+1 == new_y and type(self.check_position(new_x, new_y)) == pieces.Piece:
                     self.swap_turns()
-                    eaten_piece = self.check_position(new_x, new_y)
+                    new_pos = self.check_position(new_x, new_y)
                     new_x = self.convert_number(new_x)
                     self.pawns[pawn.position].x = new_x
                     self.pawns[pawn.position].y = new_y
-                    self.pawns[eaten_piece.position].x = 'dead'
-                    self.pawns[eaten_piece.position].y = 0
+                    if type(new_pos) != str:
+                        new_pos.x = 'dead'
+                        new_pos.y = 0
                     return "Got it\n"
             else:
                 if new_x == x and new_y < y and new_y >= y-2:
@@ -296,12 +297,13 @@ class Board:
                     return "You moved a pawn\n"
                 elif (x+1 == new_x or x-1 == new_x) and y-1 == new_y and type(self.check_position(new_x, new_y)) == pieces.Piece:
                     self.swap_turns()
-                    eaten_piece = self.check_position(new_x, new_y)
+                    new_pos = self.check_position(new_x, new_y)
                     new_x = self.convert_number(new_x)
                     self.pawns[pawn.position].x = new_x
                     self.pawns[pawn.position].y = new_y
-                    self.pawns[eaten_piece.position].x = 'dead'
-                    self.pawns[eaten_piece.position].y = 0
+                    if type(new_pos) != str:
+                        new_pos.x = 'dead'
+                        new_pos.y = 0
                     return "Got it\n"
             return "You can't move a pawn there\n"
         
@@ -331,6 +333,23 @@ class Board:
                     new_x = self.convert_number(new_x)
                     self.bishops[bishop.position].x = new_x
                     self.bishops[bishop.position].y = new_y
+                    if type(new_pos) != str:
+                        new_pos.x = 'dead'
+                        new_pos.y = 0
+                    return "You moved a bishop\n"
+                return f"You can't move a bishop there\n"
+        
+        if type(self.check_position(x, y).type)  == pieces.Rook:
+                rook = self.check_position(x, y)
+                new_pos = self.check_position(new_x, new_y)
+                available_moves = self.available_moves(rook)
+                if ([new_x, new_y] in available_moves):
+                    if type(new_pos) == pieces.Piece and new_pos.color == self.turn:
+                        return f"There is already a piece at that position\n"
+                    self.swap_turns()
+                    new_x = self.convert_number(new_x)
+                    self.rooks[rook.position].x = new_x
+                    self.rooks[rook.position].y = new_y
                     if type(new_pos) != str:
                         new_pos.x = 'dead'
                         new_pos.y = 0
