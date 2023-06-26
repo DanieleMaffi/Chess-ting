@@ -404,7 +404,7 @@ class Board:
                 available.remove(move)
             if available == []:
                 print(self)
-                raise Exception("Check mate!")
+                print("Check mate!")
             else:
                 return True
         return False
@@ -638,12 +638,12 @@ class Board:
         if self.turn == 'black' and self.check_position(x, y).color == 'white':
             return "You cannot move white's pieces\n"
         
+        if not self.check_block(x, y, new_x, new_y) and type(self.check_position(x, y).type) != pieces.King:
+            return "You cannot move that piece!\n"
+        
         if self.is_check() and type(self.check_position(x, y).type) != pieces.King:
             if not self.check_block(x, y, new_x, new_y):
                 return "You have to move the king first or block the check\n"
-            
-        if not self.check_block(x, y, new_x, new_y) and type(self.check_position(x, y).type) != pieces.King:
-            return "You cannot move that piece!\n"
         
         if type(self.check_position(x, y).type)  == pieces.Pawn:
             pawn = self.check_position(x, y)
@@ -663,7 +663,7 @@ class Board:
                         self.queens.append(new_queen)
                     self.update_territory(self.turn)
                     self.swap_turns()
-                    self.is_check()
+                    #self.is_check()
                     return "You moved a pawn\n"
                 elif (x+1 == new_x or x-1 == new_x) and y+1 == new_y and type(self.check_position(new_x, new_y)) == pieces.Piece:
                     new_pos = self.check_position(new_x, new_y)
@@ -675,7 +675,7 @@ class Board:
                         new_pos.y = 0
                     self.update_territory(self.turn)
                     self.swap_turns()
-                    self.is_check()
+                    #self.is_check()
                     return "Got it\n"
             else:
                 if new_x == x and new_y < y and new_y >= y-2:
@@ -693,7 +693,7 @@ class Board:
                         self.queens.append(new_queen)
                     self.update_territory(self.turn)
                     self.swap_turns()
-                    self.is_check()
+                    #self.is_check()
                     return "You moved a pawn\n"
                 elif (x+1 == new_x or x-1 == new_x) and y-1 == new_y and type(self.check_position(new_x, new_y)) == pieces.Piece:
                     new_pos = self.check_position(new_x, new_y)
@@ -705,7 +705,7 @@ class Board:
                         new_pos.y = 0
                     self.update_territory(self.turn)
                     self.swap_turns()
-                    self.is_check()
+                    #self.is_check()
                     return "Got it\n"
             return "You can't move a pawn there\n"
         
@@ -723,7 +723,7 @@ class Board:
                         new_pos.y = 0
                     self.update_territory(self.turn)
                     self.swap_turns()
-                    self.is_check()
+                    #self.is_check()
                     return "You moved a horse\n"
                 return "You can't move a horsy there\n"
         
@@ -742,7 +742,7 @@ class Board:
                         new_pos.y = 0
                     self.update_territory(self.turn)
                     self.swap_turns()
-                    self.is_check()
+                    #self.is_check()
                     return "You moved a bishop\n"
                 return f"You can't move a bishop there\n"
         
@@ -763,7 +763,7 @@ class Board:
                         new_pos.y = 0
                     self.update_territory(self.turn)
                     self.swap_turns()
-                    self.is_check()
+                    #self.is_check()
                     return "You moved a rook\n"
                 return f"You can't move a rook there\n"
         
@@ -782,7 +782,7 @@ class Board:
                         new_pos.y = 0
                     self.update_territory(self.turn)
                     self.swap_turns()
-                    self.is_check()
+                    #self.is_check()
                     return "You moved the queen\n"
                 return f"You can't move the queen there\n"
         
@@ -802,7 +802,7 @@ class Board:
                         new_pos.y = 0
                     self.update_territory(self.turn)
                     self.swap_turns()
-                    self.is_check()
+                    #self.is_check()
                     return "You moved the king\n"
                 return f"You can't move the king there\n"
 
