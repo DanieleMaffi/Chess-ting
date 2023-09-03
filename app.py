@@ -1,10 +1,12 @@
 import pieces
 import boardLogic
 import os
+import sys
 
 board = boardLogic.Board()
 
 print(board)
+
 
 while(1):
     while(True):
@@ -13,6 +15,9 @@ while(1):
         except:
             print("Invalid piece, try again")
             continue
+        break
+
+    if x == '^exit exit':
         break
 
     while(True):
