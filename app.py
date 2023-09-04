@@ -17,7 +17,7 @@ while(1):
             continue
         break
 
-    if x == '^exit exit':
+    if x == 'exit':
         break
 
     while(True):
