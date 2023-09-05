@@ -20,17 +20,16 @@ while(1):
     if x == 'exit':
         break
 
-    while(True):
-        try:
-            new_x, new_y = input("Select the new position: ").split()
-        except:
-            print("Invalid position, try again")
-            continue
-        break
-
     if x == "O-O" or x == "O-O-O":
         result = board.castle(x)
-    else: 
+    else:
+        while(True):
+            try:
+                new_x, new_y = input("Select the new position: ").split()
+            except:
+                print("Invalid position, try again")
+                continue
+            break
         result = board.move_piece(x, int(y), new_x, int(new_y))
 
     #clear console
